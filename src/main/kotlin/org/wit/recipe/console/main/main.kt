@@ -8,6 +8,8 @@ private val logger = KotlinLogging.logger {}
 
 var recipe = RecipeModel()
 
+val recipes = ArrayList<RecipeModel>()
+
 fun main(args: Array<String>) {
     logger.info { "Launching Recipe Book App" }
     println("Recipe Book App")
@@ -70,7 +72,12 @@ fun addRecipe(){
     print("Input allergens : ")
     recipe.allergens = readLine()!!
 
-    println("You added a [ " +recipe.name+ "] recipe, and described it - [ " +recipe.shortdescription+ "]. You added [ " +recipe.ingredients+ "] as ingredients. Cooking instructions you added are - [ " +recipe.howtomake+ "]. You added [" +recipe.allergens+ "] under allergens")
+    if (recipe.name.isNotEmpty() && recipe.shortdescription.isNotEmpty() && recipe.ingredients.isNotEmpty() && recipe.howtomake.isNotEmpty() && recipe.cookingtime.isNotEmpty() && recipe.allergens.isNotEmpty()) {
+        recipes.add(recipe.copy())
+        logger.info("Placemark Added : [ $recipe ]")
+    }
+    else
+        logger.info("Recipe Not Added")
 
 }
 
@@ -100,5 +107,7 @@ fun updateRecipe() {
 }
 
 fun listRecipes() {
-    println("You Chose List All Recipes")
+    println("List All Recipes")
+    println()
+    recipes.forEach { logger.info("${it}") }
 }
