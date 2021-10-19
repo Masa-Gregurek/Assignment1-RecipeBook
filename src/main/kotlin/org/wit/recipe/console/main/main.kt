@@ -21,7 +21,6 @@ fun main(args: Array<String>) {
             2 -> updateRecipe()
             3 -> listRecipes()
             4 -> searchRecipe()
-            -99 -> dummyData()
             -1 -> println("Exiting App")
             else -> println("Invalid Option")
         }
@@ -39,7 +38,7 @@ fun menu() : Int {
     println(" 1. Add Recipe")
     println(" 2. Update Recipe")
     println(" 3. List All Recipes")
-    println("4. Search Recipes")
+    println(" 4. Search Recipes")
     println("-1. Exit")
     println()
     print("Enter an option : ")
@@ -76,6 +75,7 @@ fun addRecipe(){
     recipe1.allergens = readLine()!!
 
     if (recipe1.name.isNotEmpty() && recipe1.shortdescription.isNotEmpty() && recipe1.ingredients.isNotEmpty() && recipe1.howtomake.isNotEmpty() && recipe1.cookingtime.isNotEmpty() && recipe1.allergens.isNotEmpty()) {
+        recipe1.id = recipes.size.toLong()
         recipes.add(recipe1.copy())
         logger.info("Recipe Added : [ $recipe1 ]")
     }
@@ -141,8 +141,3 @@ fun search(id: Long) : RecipeModel? {
 }
 
 
-fun dummyData() {
-    recipes.add(RecipeModel(1, "Bolognese", "Cheesy delight"))
-    recipes.add(RecipeModel(2, "Carbonara", "Creamy"))
-    recipes.add(RecipeModel(3, "Tortillas", "Spicy"))
-}
