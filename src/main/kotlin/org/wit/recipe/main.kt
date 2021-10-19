@@ -4,6 +4,13 @@ import mu.KotlinLogging
 
 private val logger = KotlinLogging.logger {}
 
+var name = ""
+var shortdescription = ""
+var ingredients = ""
+var howtomake = ""
+var cookingtime = ""
+var allergens = ""
+
 
 fun main(args: Array<String>) {
     logger.info { "Launching Recipe Book App" }
@@ -14,7 +21,9 @@ fun main(args: Array<String>) {
     do {
         input = menu()
         when(input) {
-            1 -> println("You Chose Add Recipe")
+            1 -> addRecipe()
+            2 -> updateRecipe()
+            3 -> listRecipes()
             -1 -> println("Exiting App")
             else -> println("Invalid Option")
         }
@@ -41,4 +50,38 @@ fun menu() : Int {
     else
         -9
     return option
+}
+
+fun addRecipe(){
+
+    println("Add Recipe")
+    println()
+    print("Enter a Name : ")
+    name = readLine()!!
+
+    println("Enter Short Description : ")
+    shortdescription = readLine()!!
+
+    println("Add Ingredient : ")
+    ingredients = readLine()!!
+
+    println("How do you cook the recipe : ")
+    howtomake = readLine()!!
+
+    println("What is the cooking time : ")
+    cookingtime = readLine()!!
+
+    println("Input allergens : ")
+    allergens = readLine()!!
+
+    println("You added a [$name] recipe, and described it - [$shortdescription]. You added [$ingredients] as ingredients. Cooking instructions you added are - [$howtomake]. You added [$allergens] under allergens")
+
+}
+
+fun updateRecipe() {
+    println("You Chose Update Recipe")
+}
+
+fun listRecipes() {
+    println("You Chose List All Recipes")
 }
