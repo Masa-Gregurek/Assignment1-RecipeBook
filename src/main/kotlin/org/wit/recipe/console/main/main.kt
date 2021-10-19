@@ -6,8 +6,6 @@ import org.wit.recipe.console.models.RecipeModel
 
 private val logger = KotlinLogging.logger {}
 
-var recipe = RecipeModel()
-
 val recipes = ArrayList<RecipeModel>()
 
 fun main(args: Array<String>) {
@@ -22,6 +20,8 @@ fun main(args: Array<String>) {
             1 -> addRecipe()
             2 -> updateRecipe()
             3 -> listRecipes()
+            4 -> searchRecipe()
+            -99 -> dummyData()
             -1 -> println("Exiting App")
             else -> println("Invalid Option")
         }
@@ -39,9 +39,10 @@ fun menu() : Int {
     println(" 1. Add Recipe")
     println(" 2. Update Recipe")
     println(" 3. List All Recipes")
+    println("4. Search Recipes")
     println("-1. Exit")
     println()
-    print("Enter an integer : ")
+    print("Enter an option : ")
     input = readLine()!!
     option = if (input.toIntOrNull() != null && !input.isEmpty())
         input.toInt()
@@ -52,29 +53,31 @@ fun menu() : Int {
 
 fun addRecipe(){
 
+    var recipe1 = RecipeModel()
+
     println("Add Recipe")
     println()
     print("Enter a Name : ")
-    recipe.name = readLine()!!
+    recipe1.name = readLine()!!
 
     print("Enter Short Description : ")
-    recipe.shortdescription = readLine()!!
+    recipe1.shortdescription = readLine()!!
 
     print("Add Ingredient : ")
-    recipe.ingredients = readLine()!!
+    recipe1.ingredients = readLine()!!
 
     print("How do you cook the recipe : ")
-    recipe.howtomake = readLine()!!
+    recipe1.howtomake = readLine()!!
 
     print("What is the cooking time : ")
-    recipe.cookingtime = readLine()!!
+    recipe1.cookingtime = readLine()!!
 
     print("Input allergens : ")
-    recipe.allergens = readLine()!!
+    recipe1.allergens = readLine()!!
 
-    if (recipe.name.isNotEmpty() && recipe.shortdescription.isNotEmpty() && recipe.ingredients.isNotEmpty() && recipe.howtomake.isNotEmpty() && recipe.cookingtime.isNotEmpty() && recipe.allergens.isNotEmpty()) {
-        recipes.add(recipe.copy())
-        logger.info("Placemark Added : [ $recipe ]")
+    if (recipe1.name.isNotEmpty() && recipe1.shortdescription.isNotEmpty() && recipe1.ingredients.isNotEmpty() && recipe1.howtomake.isNotEmpty() && recipe1.cookingtime.isNotEmpty() && recipe1.allergens.isNotEmpty()) {
+        recipes.add(recipe1.copy())
+        logger.info("Recipe Added : [ $recipe1 ]")
     }
     else
         logger.info("Recipe Not Added")
@@ -84,30 +87,62 @@ fun addRecipe(){
 fun updateRecipe() {
     println("Update Recipe")
     println()
-    print("Enter a new Title for [ " +recipe.name+ " ] : ")
-    recipe.name = readLine()!!
+    listRecipes()
+    var searchId = getId()
+    val recipe1 = search(searchId)
 
-    print("Enter a new Short Description for [ " +recipe.shortdescription+ " ] : ")
-    recipe.shortdescription = readLine()!!
-
-    print("Change an Ingredient [ " +recipe.ingredients+ "] : ")
-    recipe.ingredients = readLine()!!
-
-    print("Change cooking method [ " +recipe.howtomake+ "] : ")
-    recipe.howtomake = readLine()!!
-
-    print("Change the cooking time [ " +recipe.cookingtime+ "] : ")
-    recipe.cookingtime = readLine()!!
-
-    print("Input allergens [ " +recipe.allergens+ "] : ")
-    recipe.allergens = readLine()!!
-
-    println("You changed a [ " +recipe.name+ "] recipe, and changed the description to - [ " +recipe.shortdescription+ "]. You changed an [ " +recipe.ingredients+ "]. You changed cooking instruction to - [ " +recipe.howtomake+ "]. You updated [" +recipe.allergens+ "]")
-
+    if(recipe1 != null) {
+        print("Enter a new Name for [ " + recipe1.name + " ] : ")
+        recipe1.name = readLine()!!
+        print("Enter a new  Short Description for [ " + recipe1.shortdescription + " ] : ")
+        recipe1.shortdescription = readLine()!!
+        println(
+            "You updated [ " + recipe1.name + " ] for name " +
+                    "and [ " + recipe1.shortdescription + " ] for short description." + "You changed [ " + recipe1.ingredients + " ] in ingredients" + "You changed [ " + recipe1.howtomake + " ] in cooking instructions" + "You changed [ " + recipe1.cookingtime + " ] in cooking time" + "You changed [ " + recipe1.allergens + " ] in allergens."
+        )
+    }
+    else
+        println("Recipe Not Updated...")
 }
 
 fun listRecipes() {
     println("List All Recipes")
     println()
     recipes.forEach { logger.info("${it}") }
+    println()
+}
+
+fun searchRecipe() {
+
+    var searchId = getId()
+    val recipe1 = search(searchId)
+
+    if(recipe1 != null)
+        println("Recipe Details [ $recipe1 ]")
+    else
+        println("Recipe Not Found...")
+}
+
+fun getId() : Long {
+    var strId : String? // String to hold user input
+    var searchId : Long // Long to hold converted id
+    print("Enter id to Search/Update : ")
+    strId = readLine()!!
+    searchId = if (strId.toLongOrNull() != null && !strId.isEmpty())
+        strId.toLong()
+    else
+        -9
+    return searchId
+}
+
+fun search(id: Long) : RecipeModel? {
+    var foundRecipe: RecipeModel? = recipes.find { p -> p.id == id }
+    return foundRecipe
+}
+
+
+fun dummyData() {
+    recipes.add(RecipeModel(1, "Bolognese", "Cheesy delight"))
+    recipes.add(RecipeModel(2, "Carbonara", "Creamy"))
+    recipes.add(RecipeModel(3, "Tortillas", "Spicy"))
 }
