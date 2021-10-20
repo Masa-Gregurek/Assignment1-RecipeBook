@@ -1,10 +1,13 @@
 package org.wit.recipe.console.main
 
 import mu.KotlinLogging
+import org.wit.recipe.console.models.RecipeMemStore
 
 import org.wit.recipe.console.models.RecipeModel
 
 private val logger = KotlinLogging.logger {}
+
+val recipes = RecipeMemStore()
 
 val recipes = ArrayList<RecipeModel>()
 
@@ -90,16 +93,47 @@ fun updateRecipe() {
     listRecipes()
     var searchId = getId()
     val recipe1 = search(searchId)
+    var tempName : String?
+    var tempShortdescription : String?
+    var tempIngredients : String?
+    var tempHowtomake : String?
+    var tempCookingtime : String?
+    var tempAllergens : String?
+
 
     if(recipe1 != null) {
         print("Enter a new Name for [ " + recipe1.name + " ] : ")
-        recipe1.name = readLine()!!
+        tempName = readLine()!!
+
         print("Enter a new  Short Description for [ " + recipe1.shortdescription + " ] : ")
-        recipe1.shortdescription = readLine()!!
-        println(
-            "You updated [ " + recipe1.name + " ] for name " +
-                    "and [ " + recipe1.shortdescription + " ] for short description." + "You changed [ " + recipe1.ingredients + " ] in ingredients" + "You changed [ " + recipe1.howtomake + " ] in cooking instructions" + "You changed [ " + recipe1.cookingtime + " ] in cooking time" + "You changed [ " + recipe1.allergens + " ] in allergens."
-        )
+        tempShortdescription = readLine()!!
+
+        print("Enter new Ingredient for [ " + recipe1.ingredients + " ] : ")
+        tempIngredients = readLine()!!
+
+        print("Enter new instructions for [ " + recipe1.howtomake + " ] : ")
+        tempHowtomake = readLine()!!
+
+        print("Enter a new cooking time [ " + recipe1.cookingtime + " ] : ")
+        tempCookingtime = readLine()!!
+
+        print("Enter a new allergen [ " + recipe1.allergens + " ] : ")
+        tempAllergens = readLine()!!
+
+        if (!tempName.isNullOrEmpty() && !tempShortdescription.isNullOrEmpty()) {
+            recipe1.name = tempName
+            recipe1.shortdescription = tempShortdescription
+            recipe1.ingredients = tempIngredients
+            recipe1.howtomake = tempHowtomake
+            recipe1.cookingtime = tempCookingtime
+            recipe1.allergens = tempAllergens
+            println(
+                "You updated [ " + recipe1.name + " ] for name, [ " + recipe1.shortdescription + " ] for short description, [ " + recipe1.ingredients + " ] for ingredients, [ " + recipe1.howtomake + " ] for cooking instructions, [ " + recipe1.cookingtime + " ] for cooking time, and [ " + recipe1.allergens + " ] for short description")
+
+            logger.info("Recipe Updated : [ $recipe1 ]")
+        }
+        else
+            logger.info("Recipe Not Updated")
     }
     else
         println("Recipe Not Updated...")
