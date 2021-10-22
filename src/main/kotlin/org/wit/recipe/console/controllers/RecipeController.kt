@@ -29,11 +29,11 @@ class RecipeController {
         do {
             input = menu()
             when (input) {
-                1 -> add()
-                2 -> update()
-                3 -> list()
-                4 -> search()
-                5 -> delete()
+                1 -> addRecipe()
+                2 -> updateRecipe()
+                3 -> listRecipe()
+                4 -> searchRecipe()
+                5 -> deleteRecipe()
                 -1 -> println( GREEN+ "Exiting App")
                 else -> println("Invalid Option")
             }
@@ -45,7 +45,7 @@ class RecipeController {
 
     fun menu() :Int { return recipeView.menu() }
 
-    fun add(){
+    fun addRecipe(){
         var recipe1 = RecipeModel()
 
         if (recipeView.addRecipeData(recipe1))
@@ -54,11 +54,11 @@ class RecipeController {
             logger.info(GREEN + "Recipe Not Added")
     }
 
-    fun list() {
+    fun listRecipe() {
         recipeView.listRecipes(recipes)
     }
 
-    fun update() {
+    fun updateRecipe() {
 
         recipeView.listRecipes(recipes)
         var searchId = recipeView.getId()
@@ -77,7 +77,7 @@ class RecipeController {
             println( GREEN + "Recipe Not Updated...")
     }
 
-    fun delete() {
+    fun deleteRecipe() {
         recipeView.listRecipes(recipes)
         var searchId = recipeView.getId()
         val recipe1 = search(searchId)
@@ -92,7 +92,7 @@ class RecipeController {
     }
 
 
-    fun search() {
+    fun searchRecipe() {
         val recipe1 = search(recipeView.getId())!!
         recipeView.showRecipe(recipe1)
     }
