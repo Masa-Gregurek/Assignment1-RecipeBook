@@ -6,6 +6,9 @@ import org.wit.recipe.console.main.recipes
 import org.wit.recipe.console.models.RecipeJSONStore
 import org.wit.recipe.console.models.RecipeModel
 
+val GREEN = "\u001b[0;32m" // GREEN
+val RESET = "\u001b[0m" // Text Reset
+
 class RecipeView {
 
     fun menu() : Int {
@@ -13,15 +16,15 @@ class RecipeView {
         var option : Int
         var input: String?
 
-        println("MAIN MENU")
-        println(" 1. Add Recipe")
-        println(" 2. Update Recipe")
-        println(" 3. List All Recipe")
-        println(" 4. Search Recipe")
-        println(" 5. Delete Recipe")
-        println("-1. Exit")
+        println( GREEN + "MAIN MENU")
+        println( GREEN + " 1. Add Recipe")
+        println( GREEN + " 2. Update Recipe")
+        println( GREEN + " 3. List All Recipe")
+        println( GREEN + " 4. Search Recipe")
+        println( GREEN + " 5. Delete Recipe")
+        println( GREEN + "-1. Exit")
         println()
-        print("Enter Option : ")
+        print( GREEN + "Enter Option : ")
         input = readLine()!!
         option = if (input.toIntOrNull() != null && !input.isEmpty())
             input.toInt()
@@ -31,7 +34,7 @@ class RecipeView {
     }
 
     fun listRecipes(recipes : RecipeJSONStore) {
-        println("List All Recipes")
+        println( GREEN + "List All Recipes")
         println()
         recipes.logAll()
         println()
@@ -39,25 +42,25 @@ class RecipeView {
 
     fun showRecipe(recipe : RecipeModel) {
         if(recipe != null)
-            println("Recipe Details [ $recipe ]")
+            println( GREEN + "Recipe Details [ $recipe ]")
         else
-            println("Recipe Not Found...")
+            println( GREEN + "Recipe Not Found...")
     }
 
     fun addRecipeData(recipe : RecipeModel) : Boolean {
 
         println()
-        print("Enter a Name : ")
+        print( GREEN + "Enter a Name : ")
         recipe.name = readLine()!!
-        print("Enter a Short Description : ")
+        print( GREEN + "Enter a Short Description : ")
         recipe.shortdescription = readLine()!!
-        print("Enter Ingredients : ")
+        print( GREEN + "Enter Ingredients : ")
         recipe.ingredients = readLine()!!
-        print("Enter Cooking Instructions : ")
+        print( GREEN + "Enter Cooking Instructions : ")
         recipe.howtomake = readLine()!!
-        print("Enter Cooking Time : ")
+        print( GREEN + "Enter Cooking Time : ")
         recipe.cookingtime = readLine()!!
-        print("Enter Allergens : ")
+        print( GREEN + "Enter Allergens : ")
         recipe.allergens = readLine()!!
 
 
@@ -74,17 +77,17 @@ class RecipeView {
         var tempAllergens: String?
 
         if (recipe != null) {
-            print("Enter a new Name for [ " + recipe.name + " ] : ")
+            print( GREEN + "Enter a new Name for [ " + recipe.name + " ] : ")
             tempName = readLine()!!
-            print("Enter a new Short Description for [ " + recipe.shortdescription + " ] : ")
+            print( GREEN + "Enter a new Short Description for [ " + recipe.shortdescription + " ] : ")
             tempShortdescription = readLine()!!
-            print("Enter Ingredients for [ " + recipe.ingredients + " ] : ")
+            print( GREEN + "Enter Ingredients for [ " + recipe.ingredients + " ] : ")
             tempIngredients = readLine()!!
-            print("Enter Cooking Instructions for [ " + recipe.howtomake + " ] : ")
+            print( GREEN + "Enter Cooking Instructions for [ " + recipe.howtomake + " ] : ")
             tempHowtomake = readLine()!!
-            print("Enter a new Cooking Time for [ " + recipe.cookingtime + " ] : ")
+            print( GREEN + "Enter a new Cooking Time for [ " + recipe.cookingtime + " ] : ")
             tempCookingtime = readLine()!!
-            print("Enter new Allergens for [ " + recipe.allergens + " ] : ")
+            print( GREEN + "Enter new Allergens for [ " + recipe.allergens + " ] : ")
             tempAllergens = readLine()!!
 
             if (!tempName.isNullOrEmpty() && !tempShortdescription.isNullOrEmpty() && !tempIngredients.isNullOrEmpty() && !tempHowtomake.isNullOrEmpty() && !tempCookingtime.isNullOrEmpty() && !tempAllergens.isNullOrEmpty()) {
@@ -103,7 +106,7 @@ class RecipeView {
     fun getId() : Long {
         var strId : String? // String to hold user input
         var searchId : Long // Long to hold converted id
-        print("Enter id to Search/Update : ")
+        print( GREEN + "Enter id to Search/Update : ")
         strId = readLine()!!
         searchId = if (strId.toLongOrNull() != null && !strId.isEmpty())
             strId.toLong()

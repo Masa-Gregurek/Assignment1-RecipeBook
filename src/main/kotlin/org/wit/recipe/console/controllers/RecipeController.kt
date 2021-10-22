@@ -2,7 +2,6 @@ package org.wit.recipe.console.controllers
 
 import mu.KotlinLogging
 import org.wit.recipe.console.models.RecipeJSONStore
-import org.wit.recipe.console.models.RecipeMemStore
 import org.wit.recipe.console.models.RecipeModel
 import org.wit.recipe.console.views.RecipeView
 
@@ -15,8 +14,12 @@ class RecipeController {
     val recipeView = RecipeView ()
     val logger = KotlinLogging.logger {}
 
+    val GREEN = "\u001b[0;32m" // GREEN
+    val RESET = "\u001b[0m" // Text Reset
+
+
     init {
-        logger.info { "Launching Recipe Book App" }
+        logger.info { GREEN + "Launching Recipe Book App" }
         println("Recipe Book App")
     }
 
@@ -31,12 +34,12 @@ class RecipeController {
                 3 -> list()
                 4 -> search()
                 5 -> delete()
-                -1 -> println("Exiting App")
+                -1 -> println( GREEN+ "Exiting App")
                 else -> println("Invalid Option")
             }
             println()
         } while (input != -1)
-        logger.info { "Shutting Down Recipe Book App" }
+        logger.info { GREEN + "Shutting Down Recipe Book App" }
     }
 
 
@@ -48,7 +51,7 @@ class RecipeController {
         if (recipeView.addRecipeData(recipe1))
             recipes.create(recipe1)
         else
-            logger.info("Recipe Not Added")
+            logger.info(GREEN + "Recipe Not Added")
     }
 
     fun list() {
@@ -65,13 +68,13 @@ class RecipeController {
             if(recipeView.updateRecipeData(recipe1)) {
                 recipes.update(recipe1)
                 recipeView.showRecipe(recipe1)
-                logger.info("Recipe Updated : [ $recipe1 ]")
+                logger.info(GREEN + "Recipe Updated : [ $recipe1 ]")
             }
             else
-                logger.info("Recipe Not Updated")
+                logger.info( GREEN + "Recipe Not Updated")
         }
         else
-            println("Recipe Not Updated...")
+            println( GREEN + "Recipe Not Updated...")
     }
 
     fun delete() {
@@ -81,11 +84,11 @@ class RecipeController {
 
         if(recipe1 != null) {
             recipes.delete(recipe1)
-            println("Recdipe Deleted...")
+            println( GREEN + "Recdipe Deleted...")
             recipeView.listRecipes(recipes)
         }
         else
-            println("Recipe Not Deleted...")
+            println( GREEN + "Recipe Not Deleted...")
     }
 
 
@@ -99,10 +102,5 @@ class RecipeController {
         return foundRecipe
     }
 
-    fun dummyData() {
-        recipes.create(RecipeModel(name = "Bolognese", shortdescription = "Cheesy goodness", ingredients = "carrots, onions, mince beef, tomato paste", howtomake = "Saute onions, add beef, pour tomato paste", cookingtime = "40", allergens = "Celery"))
-        recipes.create(RecipeModel(name= "Carbonara", shortdescription = "Creamy delight", ingredients = "pancetta, spaghetti, butter", howtomake = "Cook pancetta, pour cooked spaghetti onto pancetta", cookingtime = "20", allergens = "Dairy"))
-        recipes.create(RecipeModel(name = "Tomato Soup", shortdescription = "Rich flavours", ingredients = "fresh tomatoes, tomato paste, basil, garlic", howtomake = "Cook fresh tomatoes, squish them when they're cooked, add tomato paste and garlic.", cookingtime = "60", allergens = "Basil"))
-    }
 }
 
