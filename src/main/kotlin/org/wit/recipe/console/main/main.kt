@@ -24,10 +24,10 @@ fun main(args: Array<String>) {
     do {
         input = recipeView.menu()
         when(input) {
-            1 -> controller.addRecipe()
-            2 -> controller.updateRecipe()
-            3 -> controller.listRecipes()
-            4 -> controller.searchRecipe()
+            1 -> controller.add()
+            2 -> controller.update()
+            3 -> controller.list()
+            4 -> controller.search()
             -1 -> println("Exiting App")
             else -> println("Invalid Option")
         }

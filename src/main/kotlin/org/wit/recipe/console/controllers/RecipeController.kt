@@ -16,9 +16,29 @@ class RecipeController {
         println("Recipe Book App")
     }
 
+    fun start() {
+        var input: Int
+
+        do {
+            input = menu()
+            when (input) {
+                1 -> add()
+                2 -> update()
+                3 -> list()
+                4 -> search()
+                -99 -> dummyData()
+                -1 -> println("Exiting App")
+                else -> println("Invalid Option")
+            }
+            println()
+        } while (input != -1)
+        logger.info { "Shutting Down Recipe Book App" }
+    }
+
+
     fun menu() :Int { return recipeView.menu() }
 
-    fun addRecipe(){
+    fun add(){
         var recipe1 = RecipeModel()
 
         if (recipeView.addRecipeData(recipe1))
@@ -27,11 +47,11 @@ class RecipeController {
             logger.info("Recipe Not Added")
     }
 
-    fun listRecipes() {
+    fun list() {
         recipeView.listRecipes(recipes)
     }
 
-    fun updateRecipe() {
+    fun update() {
 
         recipeView.listRecipes(recipes)
         var searchId = recipeView.getId()
@@ -44,14 +64,14 @@ class RecipeController {
                 logger.info("Recipe Updated : [ $recipe1 ]")
             }
             else
-                logger.info("Placemark Not Updated")
+                logger.info("Recipe Not Updated")
         }
         else
             println("Placemark Not Updated...")
     }
 
 
-    fun searchRecipe() {
+    fun search() {
         val recipe1 = search(recipeView.getId())!!
         recipeView.showRecipe(recipe1)
     }
@@ -61,4 +81,10 @@ class RecipeController {
         return foundRecipe
     }
 
+    fun dummyData() {
+        recipes.create(RecipeModel(name = "Bolognese", shortdescription = "Cheesy goodness", ingredients = "carrots, onions, mince beef, tomato paste", howtomake = "Saute onions, add beef, pour tomato paste", cookingtime = "40", allergens = "Celery"))
+        recipes.create(RecipeModel(name= "Carbonara", shortdescription = "Creamy delight", ingredients = "pancetta, spaghetti, butter", howtomake = "Cook pancetta, pour cooked spaghetti onto pancetta", cookingtime = "20", allergens = "Dairy"))
+        recipes.create(RecipeModel(name = "Tomato Soup", shortdescription = "Rich flavours", ingredients = "fresh tomatoes, tomato paste, basil, garlic", howtomake = "Cook fresh tomatoes, squish them when they're cooked, add tomato paste and garlic.", cookingtime = "60", allergens = "Basil"))
+    }
 }
+
