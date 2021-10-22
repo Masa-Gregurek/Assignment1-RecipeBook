@@ -1,13 +1,17 @@
-package org.wit.placemark.console.controllers
+package org.wit.recipe.console.controllers
 
 import mu.KotlinLogging
+import org.wit.recipe.console.models.RecipeJSONStore
 import org.wit.recipe.console.models.RecipeMemStore
 import org.wit.recipe.console.models.RecipeModel
 import org.wit.recipe.console.views.RecipeView
 
 class RecipeController {
 
-    val recipes = RecipeMemStore()
+    // val recipes = RecipeMemStore()
+
+    val recipes = RecipeJSONStore()
+
     val recipeView = RecipeView ()
     val logger = KotlinLogging.logger {}
 
@@ -26,7 +30,7 @@ class RecipeController {
                 2 -> update()
                 3 -> list()
                 4 -> search()
-                -99 -> dummyData()
+                5 -> delete()
                 -1 -> println("Exiting App")
                 else -> println("Invalid Option")
             }
@@ -67,7 +71,21 @@ class RecipeController {
                 logger.info("Recipe Not Updated")
         }
         else
-            println("Placemark Not Updated...")
+            println("Recipe Not Updated...")
+    }
+
+    fun delete() {
+        recipeView.listRecipes(recipes)
+        var searchId = recipeView.getId()
+        val recipe1 = search(searchId)
+
+        if(recipe1 != null) {
+            recipes.delete(recipe1)
+            println("Recdipe Deleted...")
+            recipeView.listRecipes(recipes)
+        }
+        else
+            println("Recipe Not Deleted...")
     }
 
 

@@ -1,4 +1,4 @@
-package org.wit.placemark.console.helpers
+package org.wit.recipe.console.helpers
 
 import mu.KotlinLogging
 import java.io.*

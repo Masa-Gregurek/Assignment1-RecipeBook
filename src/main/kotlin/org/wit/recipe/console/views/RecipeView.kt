@@ -1,8 +1,9 @@
 package org.wit.recipe.console.views
 
+
 import org.wit.recipe.console.main.recipeView
 import org.wit.recipe.console.main.recipes
-import org.wit.recipe.console.models.RecipeMemStore
+import org.wit.recipe.console.models.RecipeJSONStore
 import org.wit.recipe.console.models.RecipeModel
 
 class RecipeView {
@@ -17,6 +18,7 @@ class RecipeView {
         println(" 2. Update Recipe")
         println(" 3. List All Recipe")
         println(" 4. Search Recipe")
+        println(" 5. Delete Recipe")
         println("-1. Exit")
         println()
         print("Enter Option : ")
@@ -28,7 +30,7 @@ class RecipeView {
         return option
     }
 
-    fun listRecipes(recipes : RecipeMemStore) {
+    fun listRecipes(recipes : RecipeJSONStore) {
         println("List All Recipes")
         println()
         recipes.logAll()

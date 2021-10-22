@@ -2,7 +2,7 @@ package org.wit.recipe.console.main
 
 import mu.KotlinLogging
 
-import org.wit.placemark.console.controllers.RecipeController
+import org.wit.recipe.console.controllers.RecipeController
 
 import org.wit.recipe.console.models.RecipeMemStore
 import org.wit.recipe.console.models.RecipeModel
@@ -16,25 +16,9 @@ val controller = RecipeController()
 
 
 fun main(args: Array<String>) {
-    logger.info { "Launching Recipe Book App" }
-    println("Recipe Book App")
-
-    var input: Int
-
-    do {
-        input = recipeView.menu()
-        when(input) {
-            1 -> controller.add()
-            2 -> controller.update()
-            3 -> controller.list()
-            4 -> controller.search()
-            -1 -> println("Exiting App")
-            else -> println("Invalid Option")
-        }
-        println()
-    } while (input != -1)
-    logger.info { "Shutting Down Recipe Book Console App" }
+    RecipeController().start()
 }
+
 
 
 
